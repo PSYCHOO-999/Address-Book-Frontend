@@ -117,6 +117,16 @@ class AddressBook {
     getNumberOfContacts() {
         return this.contacts.length;
     }
+
+    // Find all contacts in a particular city
+    findContactsByCity(city) {
+        return this.contacts.filter(contact => contact.city.toLowerCase() === city.toLowerCase());
+    }
+
+    // Find all contacts in a particular state
+    findContactsByState(state) {
+        return this.contacts.filter(contact => contact.state.toLowerCase() === state.toLowerCase());
+    }
 }
 
 module.exports = AddressBook;
