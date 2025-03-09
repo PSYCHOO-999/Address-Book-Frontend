@@ -3,7 +3,7 @@ const Contact = require('./Model/Contact');
 
 class AddressBookManager {
     constructor() {
-        this.addressBooks = []; // Array to store multiple address books
+        this.addressBooks = []; 
     }
 
     // Create a new Address Book
@@ -33,6 +33,17 @@ class AddressBookManager {
         return addressBook.editContact(firstName, lastName, updatedContact);
     }
 
+    // Find and delete contact from a specific Address Book
+    findAndDeleteContact(bookName, firstName, lastName) {
+        const addressBook = this.addressBooks.find(book => book.name === bookName);
+        if (!addressBook) {
+            return `Address Book '${bookName}' not found.`;
+        }
+
+        // Find the contact and delete it
+        return addressBook.deleteContact(firstName, lastName);
+    }
+
     // Get all Address Books
     getAllAddressBooks() {
         return this.addressBooks.map(book => book.name);
@@ -48,19 +59,16 @@ console.log(manager.createNewAddressBook("Work Address Book"));
 
 // Create Contacts
 const contact1 = new Contact("Aman", "Singh", "Basant kunj, Bhopal", "Bhopal", "India", "462022", "9876543210", "Amansingh@gmail.com");
-const contact2 = new Contact("John", "Doe", "123 Elm Street", "New York", "USA", "10001", "555-555-5555", "johndoe@example.com");
+const contact2 = new Contact("Rohan", "Singh", "123 Elm Street", "New York", "USA", "10001", "555-555-5555", "johndoe@example.com");
 
 // Add Contacts to specific Address Books
-console.log(manager.addContactToAddressBook("Personal Address Book", contact1)); // Add contact1 to "Personal Address Book"
-console.log(manager.addContactToAddressBook("Work Address Book", contact2)); // Add contact2 to "Work Address Book"
+console.log(manager.addContactToAddressBook("Personal Address Book", contact1)); 
+console.log(manager.addContactToAddressBook("Work Address Book", contact2)); 
+// Find and delete a contact from "Personal Address Book"
+console.log(manager.findAndDeleteContact("Personal Address Book", "Aman", "Singh")); 
 
-// Find and edit an existing contact
-const updatedContact = new Contact("Aman", "Singh", "Updated address, Bhopal", "Bhopal", "India", "462022", "9876543210", "newemail@example.com");
-console.log(manager.findAndEditContact("Personal Address Book", "Aman", "Singh", updatedContact)); // Update contact1
-
-// Get all contacts in the "Personal Address Book"
+// Try to find the deleted contact
 const personalAddressBook = manager.addressBooks.find(book => book.name === "Personal Address Book");
-console.log(personalAddressBook.getAllContacts()); // Should show updated contact details
-
+console.log(personalAddressBook.getAllContacts());
 // List all Address Books
-console.log(manager.getAllAddressBooks()); // Should list all created Address Books
+console.log(manager.getAllAddressBooks()); 
