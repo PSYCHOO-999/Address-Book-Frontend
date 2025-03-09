@@ -1,51 +1,29 @@
+const Contact = require('./Model/Contact');
+
 class AddressBook {
-    constructor(name) {
-        this.name = name;
+    constructor() {
         this.contacts = [];
     }
 
-    // Add contact to the address book
     addContact(contact) {
         this.contacts.push(contact);
-        return "Contact added successfully!";
     }
 
-    // Get contacts by city
-    getContactsByCity(city) {
-        return this.contacts.filter(contact => contact.city.toLowerCase() === city.toLowerCase());
+    sortContactsByName() {
+        return this.contacts.sort((a, b) => {
+            const nameA = a.getFullName().toLowerCase();
+            const nameB = b.getFullName().toLowerCase();
+            return nameA.localeCompare(nameB);
+        });
     }
 
-    // Get contacts by state
-    getContactsByState(state) {
-        return this.contacts.filter(contact => contact.state.toLowerCase() === state.toLowerCase());
+    printContacts() {
+        this.contacts.forEach(contact => console.log(contact.toString() + '\n'));
     }
 
-    // Group contacts by city and get count
-    getCountByCity(city) {
-        const contactsInCity = this.getContactsByCity(city);
-        return contactsInCity.length;
-    }
-
-    // Group contacts by state and get count
-    getCountByState(state) {
-        const contactsInState = this.getContactsByState(state);
-        return contactsInState.length;
-    }
-
-    // Group contacts by city and return counts
-    getGroupedByCity() {
-        return this.contacts.reduce((acc, contact) => {
-            acc[contact.city] = (acc[contact.city] || 0) + 1;
-            return acc;
-        }, {});
-    }
-
-    // Group contacts by state and return counts
-    getGroupedByState() {
-        return this.contacts.reduce((acc, contact) => {
-            acc[contact.state] = (acc[contact.state] || 0) + 1;
-            return acc;
-        }, {});
+    printSortedContacts() {
+        const sortedContacts = this.sortContactsByName();
+        sortedContacts.forEach(contact => console.log(contact.toString() + '\n'));
     }
 }
 
