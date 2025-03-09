@@ -1,8 +1,9 @@
 const Contact = require('../Model/Contact');
 
 class AddressBook {
-    constructor() {
-        this.contacts = [];
+    constructor(name) {
+        this.name = name; 
+        this.contacts = []; 
     }
 
     // Validation method
@@ -11,7 +12,7 @@ class AddressBook {
         const addressRegex = /^.{4,}$/;
         const zipRegex = /^\d{5}(-\d{4})?$/;
         const phoneRegex = /^(\(\d{3}\)\s?|\d{3}-)\d{3}-\d{4}$/;
-        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zAZ]{2,}$/;
 
         // Validate First Name and Last Name
         if (!nameRegex.test(contact.firstName)) {
@@ -50,19 +51,57 @@ class AddressBook {
         return true;
     }
 
+    // Add contact after validation
     addContact(contact) {
-        // Validate the contact before adding it
         try {
             this.validateContact(contact);
             this.contacts.push(contact);
             return "Contact added successfully!";
         } catch (error) {
-            return error.message; // Return the validation error message
+            return error.message; 
         }
     }
 
+    // Get all contacts in this address book
     getAllContacts() {
         return this.contacts;
+    }
+
+    // Find contact by first name and last name
+    findContact(firstName, lastName) {
+        return this.contacts.find(contact => contact.firstName === firstName && contact.lastName === lastName);
+    }
+
+    // Edit contact details
+    editContact(firstName, lastName, updatedContact) {
+        const contact = this.findContact(firstName, lastName);
+        if (!contact) {
+            return "Contact not found!";
+        }
+
+        // Update contact details
+        contact.firstName = updatedContact.firstName || contact.firstName;
+        contact.lastName = updatedContact.lastName || contact.lastName;
+        contact.address = updatedContact.address || contact.address;
+        contact.city = updatedContact.city || contact.city;
+        contact.state = updatedContact.state || contact.state;
+        contact.zip = updatedContact.zip || contact.zip;
+        contact.phone = updatedContact.phone || contact.phone;
+        contact.email = updatedContact.email || contact.email;
+
+        return "Contact updated successfully!";
+    }
+
+    // Delete contact by first name and last name
+    deleteContact(firstName, lastName) {
+        const index = this.contacts.findIndex(contact => contact.firstName === firstName && contact.lastName === lastName);
+        if (index === -1) {
+            return "Contact not found!";
+        }
+
+        // Remove the contact from the array
+        this.contacts.splice(index, 1);
+        return "Contact deleted successfully!";
     }
 }
 
