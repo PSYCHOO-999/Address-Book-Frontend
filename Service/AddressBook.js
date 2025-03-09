@@ -51,11 +51,20 @@ class AddressBook {
         return true;
     }
 
-    // Add contact after validation
+    // Add contact after validation and duplicate check
     addContact(contact) {
+        // Check if the contact already exists in the address book using first and last name
+        const duplicate = this.contacts.some(existingContact => 
+            existingContact.firstName === contact.firstName && existingContact.lastName === contact.lastName
+        );
+
+        if (duplicate) {
+            return "Duplicate contact! A contact with this name already exists in the address book.";
+        }
+
         try {
-            this.validateContact(contact);
-            this.contacts.push(contact);
+            this.validateContact(contact); // Validate the contact before adding
+            this.contacts.push(contact); // Add the new contact to the array
             return "Contact added successfully!";
         } catch (error) {
             return error.message; // Return the validation error message
