@@ -19,7 +19,7 @@ class AddressBookManager {
         if (!addressBook) {
             return `Address Book '${bookName}' not found.`;
         }
-        return addressBook.addContact(contact); // Add contact to the found address book
+        return addressBook.addContact(contact); 
     }
 
     // Find and edit contact in a specific Address Book
@@ -44,6 +44,16 @@ class AddressBookManager {
         return addressBook.deleteContact(firstName, lastName);
     }
 
+    // Get the number of contacts in a specific Address Book
+    getNumberOfContactsInAddressBook(bookName) {
+        const addressBook = this.addressBooks.find(book => book.name === bookName);
+        if (!addressBook) {
+            return `Address Book '${bookName}' not found.`;
+        }
+
+        return `There are ${addressBook.getNumberOfContacts()} contacts in the address book '${bookName}'.`;
+    }
+
     // Get all Address Books
     getAllAddressBooks() {
         return this.addressBooks.map(book => book.name);
@@ -59,16 +69,21 @@ console.log(manager.createNewAddressBook("Work Address Book"));
 
 // Create Contacts
 const contact1 = new Contact("Aman", "Singh", "Basant kunj, Bhopal", "Bhopal", "India", "462022", "9876543210", "Amansingh@gmail.com");
-const contact2 = new Contact("Rohan", "Singh", "123 Elm Street", "New York", "USA", "10001", "555-555-5555", "johndoe@example.com");
+const contact2 = new Contact("Sonu", "Kumar", "Gopalganj", "Bihar", "India", "832929", "187829702", "sonu@example.com");
 
 // Add Contacts to specific Address Books
 console.log(manager.addContactToAddressBook("Personal Address Book", contact1)); 
 console.log(manager.addContactToAddressBook("Work Address Book", contact2)); 
-// Find and delete a contact from "Personal Address Book"
-console.log(manager.findAndDeleteContact("Personal Address Book", "Aman", "Singh")); 
 
-// Try to find the deleted contact
-const personalAddressBook = manager.addressBooks.find(book => book.name === "Personal Address Book");
-console.log(personalAddressBook.getAllContacts());
-// List all Address Books
-console.log(manager.getAllAddressBooks()); 
+// Get number of contacts in "Personal Address Book"
+console.log(manager.getNumberOfContactsInAddressBook("Personal Address Book")); 
+
+// Get number of contacts in "Work Address Book"
+console.log(manager.getNumberOfContactsInAddressBook("Work Address Book"));
+
+// Add another contact to "Personal Address Book"
+const contact3 = new Contact("Rishu", "Singh", "bhopal", "bhopal ", "india", "78698", "987654344", "alice@example.com");
+console.log(manager.addContactToAddressBook("Personal Address Book", contact3)); 
+
+// Get number of contacts again in "Personal Address Book"
+console.log(manager.getNumberOfContactsInAddressBook("Personal Address Book")); 

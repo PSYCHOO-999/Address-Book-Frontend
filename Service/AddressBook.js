@@ -2,8 +2,8 @@ const Contact = require('../Model/Contact');
 
 class AddressBook {
     constructor(name) {
-        this.name = name; 
-        this.contacts = []; 
+        this.name = name; // Name for the address book
+        this.contacts = []; // Contacts will be stored in an array
     }
 
     // Validation method
@@ -58,7 +58,7 @@ class AddressBook {
             this.contacts.push(contact);
             return "Contact added successfully!";
         } catch (error) {
-            return error.message; 
+            return error.message; // Return the validation error message
         }
     }
 
@@ -102,6 +102,11 @@ class AddressBook {
         // Remove the contact from the array
         this.contacts.splice(index, 1);
         return "Contact deleted successfully!";
+    }
+
+    // Get the number of contacts in this address book
+    getNumberOfContacts() {
+        return this.contacts.length;
     }
 }
 
