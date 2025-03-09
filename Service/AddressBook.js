@@ -119,13 +119,37 @@ class AddressBook {
     }
 
     // Find all contacts in a particular city
-    findContactsByCity(city) {
+    getContactsByCity(city) {
         return this.contacts.filter(contact => contact.city.toLowerCase() === city.toLowerCase());
     }
 
     // Find all contacts in a particular state
-    findContactsByState(state) {
+    getContactsByState(state) {
         return this.contacts.filter(contact => contact.state.toLowerCase() === state.toLowerCase());
+    }
+
+    // Group contacts by city using reduce
+    groupContactsByCity() {
+        return this.contacts.reduce((groupedContacts, contact) => {
+            const city = contact.city;
+            if (!groupedContacts[city]) {
+                groupedContacts[city] = [];
+            }
+            groupedContacts[city].push(contact);
+            return groupedContacts;
+        }, {});
+    }
+
+    // Group contacts by state using reduce
+    groupContactsByState() {
+        return this.contacts.reduce((groupedContacts, contact) => {
+            const state = contact.state;
+            if (!groupedContacts[state]) {
+                groupedContacts[state] = [];
+            }
+            groupedContacts[state].push(contact);
+            return groupedContacts;
+        }, {});
     }
 }
 
