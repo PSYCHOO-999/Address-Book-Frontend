@@ -19,4 +19,13 @@ console.log("Unsorted Contacts:");
 addressBook.printContacts();
 
 console.log("\nSorted Contacts by Name:");
-addressBook.printSortedContacts();
+addressBook.printSortedContactsByName();
+
+console.log("\nSorted Contacts by City:");
+addressBook.printSortedContactsByCity();
+
+console.log("\nSorted Contacts by State:");
+addressBook.printSortedContactsByState();
+
+console.log("\nSorted Contacts by Zip:");
+addressBook.printSortedContactsByZip();
